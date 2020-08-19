@@ -1,3 +1,5 @@
+#!groovy
+
 node {
     def app
 
@@ -7,6 +9,7 @@ node {
     }
 
     stage('Build ') {
+	
         sh "mvn -B -DskipTests clean package"
     }
 
