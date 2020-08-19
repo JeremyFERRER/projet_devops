@@ -1,6 +1,7 @@
 #!groovy
 
 node {
+    def mvnHome
     def app
 
     stage('Clone repository') {
@@ -9,13 +10,14 @@ node {
     }
 
     stage('Build ') {
-	
-        sh "mvn -B -DskipTests clean package"
+	mvnHome = tool 'mvn'
+        sh "'${mvnHome}/bin/mvn' -f hello-docker/pom.xml -B -DskipTests clean package"
     }
 
     stage('Test App') {
       steps {
-        sh 'mvn test'
+	mvnHome = tool 'mvn'
+        sh "'${mvnHome}/bin/mvn' -f hello-docker/pom.xml test"
       }
       post {
         always {
